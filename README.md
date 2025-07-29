@@ -18,13 +18,6 @@ AI/ML Engineer specializing in Generative AI and Computer Vision with strong sof
   - 📊 End-to-end ML pipelines
   - 💻 AI-powered software solutions
 
-### 🏆 Achievements
-
-* 🥇 **Ranked 4th** in Department (B.Tech - Bioengineering)
-* 🎖️ **Amazon ML Summer School 2024** - Selected as top candidate
-* 📊 **AP EAPCET Top 1%** - Among 3 lakh candidates
-* ⭐ **A Grade** - Introduction to Machine Learning Course
-* 🏒 **Hockey Team Member** - Inter IIT Sports Meet 2023
 
 ### 🔧 My Skills
 
