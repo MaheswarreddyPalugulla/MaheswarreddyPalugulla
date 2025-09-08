@@ -1,52 +1,118 @@
-# Hi! 👋🏻 My name is Venkata MaheswarReddy Palugulla
+# Mini Agentic Commerce Assignment
 
-## AI/ML Engineer | SDE | IIT Jodhpur '26
+> 🛍️ **EvoAI Commerce Agent** - A LangGraph-powered shopping assistant with strict policy enforcement
+>
+> 🎯 **Assignment**: Build an agent that handles product recommendations and order management with a 60-minute cancellation policy
+>
+> 🔧 **Stack**: LangGraph, Python, JSON tools
 
-AI/ML Engineer specializing in Generative AI and Computer Vision with strong software development fundamentals. I build production-ready AI systems from research to deployment - from RAG-based chatbots using LLMs to multi-object tracking systems. My software engineering background ensures scalable, maintainable AI solutions. Currently ranked 4th in my department and Amazon ML Summer School 2024 selectee.
+## Features
 
-### 🚀 About Me
+✅ **Product Assist**: Search, compare, size recommendations, ETA by zip  
+✅ **Order Management**: Secure lookup with strict 60-minute cancellation policy  
+✅ **Policy Enforcement**: Automated guardrails and helpful alternatives  
+✅ **JSON Tracing**: Full decision traces for every interaction
 
-* 🌍 I'm actually from Ongole, Andhra Pradesh, India
-* 🎓 B.Tech Bioengineering @ IIT Jodhpur | CGPA: 8.01
-* 🖥️ See my portfolio at [github.com/MaheswarreddyPalugulla](https://github.com/MaheswarreddyPalugulla)
-* ✉️ You can contact me at [b22bb029@iitj.ac.in](mailto:b22bb029@iitj.ac.in)
-* 🧠 I'm learning **Large Language Model fine-tuning**, **Multi-modal AI** (Vision + Language), **MLOps with containerization**, and **Advanced prompt engineering techniques**
-* 🤝 I'm open to collaborating on:
-  - 🤖 Generative AI applications
-  - 👁️ Computer Vision projects 
-  - 🔗 LLM integration systems
-  - 📊 End-to-end ML pipelines
-  - 💻 AI-powered software solutions
+## Quick Start
 
+### Setup
+```bash
+# Clone and setup
+git clone <repository-url>
+cd MaheswarreddyPalugulla
 
-### 🔧 My Skills
+# Install dependencies
+pip install -r requirements.txt
 
-**Programming Languages:**
-<p align="left">
-<a href="https://www.python.org/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/RoniJackVituli/gitprofile/main/src/helpers/icons/programming/python-color.svg" alt="Python" width="45px" height="45px"/></a>
-<a href="https://docs.microsoft.com/en-us/cpp/?view=msvc-170" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/RoniJackVituli/gitprofile/main/src/helpers/icons/programming/c-color.svg" alt="C" width="45px" height="45px"/></a>
-<a href="https://docs.microsoft.com/en-us/cpp/?view=msvc-170" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/RoniJackVituli/gitprofile/main/src/helpers/icons/programming/cplusplus-color.svg" alt="C++" width="45px" height="45px"/></a>
-<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/RoniJackVituli/gitprofile/main/src/helpers/icons/programming/javascript-color.svg" alt="JavaScript" width="45px" height="45px"/></a>
-</p>
+# Optional: Set up OpenAI API key
+cp .env.example .env
+# Edit .env with your OPENAI_API_KEY (tests work without it)
+```
 
-**Databases:**
-<p align="left">
-<a href="https://www.mysql.com/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/RoniJackVituli/gitprofile/main/src/helpers/icons/programming/mysql-color.svg" alt="MySQL" width="45px" height="45px"/></a>
-<a href="https://mongodb.com/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/RoniJackVituli/gitprofile/main/src/helpers/icons/programming/mongodb-color.svg" alt="MongoDB" width="45px" height="45px"/></a>
-</p>
+### Run Tests
+```bash
+# Run all 4 required test scenarios
+python -m tests.run_tests
 
-**Development Tools:**
-<p align="left">
-<a href="https://code.visualstudio.com/docs" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/RoniJackVituli/gitprofile/main/src/helpers/icons/ide/vscode-color.svg" alt="VS Code" width="45px" height="45px"/></a>
-<a href="https://www.jetbrains.com/pycharm/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/RoniJackVituli/gitprofile/main/src/helpers/icons/ide/pycharm-color.svg" alt="PyCharm" width="45px" height="45px"/></a>
-</p>
+# Tests cover:
+# 1. Product Assist (wedding guest dress under $120)
+# 2. Order Help - Allowed (recent order cancellation)
+# 3. Order Help - Blocked (old order cancellation)
+# 4. Guardrail (invalid discount code request)
+```
 
-### 📫 Find Me Also Here
+## Project Structure
 
-<p align="left">
-<a href="https://www.github.com/MaheswarreddyPalugulla" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/RoniJackVituli/gitprofile/main/src/helpers/icons/socials/github.svg" width="45px" height="45px" /></a>
-<a href="https://www.linkedin.com/in/maheswarreddy-palugulla-b76b28268/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/RoniJackVituli/gitprofile/main/src/helpers/icons/socials/linkedin.svg" width="45px" height="45px" /></a>
-</p>
+```
+/src/                 # Agent implementation
+  graph.py           # LangGraph nodes & workflow
+  tools.py           # Commerce tools & logic
+/data/               # Mock data
+  products.json      # Product catalog
+  orders.json        # Order database
+/prompts/            # System prompts
+  system.md          # Agent instructions & few-shots
+/tests/              # Test scenarios
+  run_tests.py       # 4 required test cases
+```
+
+## Agent Architecture
+
+```mermaid
+flowchart LR
+  U[User] --> R[Router]
+  R -->|product_assist| TS[ToolSelector]
+  R -->|order_help| TS
+  TS --> Tools[(Tools)]
+  Tools --> PG[PolicyGuard]
+  PG --> RESP[Responder]
+  RESP --> U2[Reply]
+```
+
+### Core Components
+
+- **Router**: Classifies intent (product_assist | order_help | other)
+- **ToolSelector**: Chooses appropriate tools based on user request
+- **PolicyGuard**: Enforces 60-minute cancellation rule & other policies
+- **Responder**: Composes final response with JSON trace
+
+### Available Tools
+
+- `product_search(query, price_max, tags)` - Find products from catalog
+- `size_recommender(user_inputs)` - M vs L sizing guidance  
+- `eta(zip)` - Delivery time estimation
+- `order_lookup(order_id, email)` - Secure order retrieval
+- `order_cancel(order_id, timestamp)` - Policy-enforced cancellation
+
+## Key Policies
+
+🕐 **60-Minute Rule**: Orders can only be cancelled within 60 minutes of creation  
+🛡️ **Guardrails**: No fake discount codes, helpful alternatives offered  
+📊 **Price Compliance**: Product recommendations respect user's budget  
+🎯 **Accuracy**: No hallucinated product facts, evidence-based responses
+
+## Sample Output
+
+```json
+{
+  "intent": "product_assist",
+  "tools_called": ["product_search", "size_recommender", "eta"],
+  "evidence": [
+    {"id": "P1", "title": "Midi Wrap Dress", "price": 119},
+    {"size_recommendation": {"recommended_size": "M", "rationale": "..."}}
+  ],
+  "policy_decision": null,
+  "final_message": "Here are 2 great options for you..."
+}
+```
+
+## Author
+
+**Venkata MaheswarReddy Palugulla**  
+AI/ML Engineer | IIT Jodhpur '26  
+📧 [b22bb029@iitj.ac.in](mailto:b22bb029@iitj.ac.in)  
+🔗 [LinkedIn](https://www.linkedin.com/in/maheswarreddy-palugulla-b76b28268/)
 
 ---
-*This Profile Created By [GitProfile](https://profilegit.netlify.app/)*
+
+*EvoAI Assignment - Demonstrating production-ready agent design with policy enforcement*
